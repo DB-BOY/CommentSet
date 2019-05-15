@@ -1,4 +1,4 @@
-package cn.dbboy.commentlib.wedget;
+package cn.dbboy.commentlib.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -36,7 +36,7 @@ public class HeartLayout extends RelativeLayout {
     /**
      * 桃心
      */
-    private int[] heartRes = new int[]{//
+    private int[] hearts = new int[]{//
             R.drawable.heart0, R.drawable.heart1,// 
             R.drawable.heart2, R.drawable.heart3, //
             R.drawable.heart4, R.drawable.heart5,//
@@ -47,22 +47,22 @@ public class HeartLayout extends RelativeLayout {
      * 插补器
      */
     private Interpolator[] interpolators = new Interpolator[]{//
-            new LinearInterpolator(), new AccelerateInterpolator(), //
-            new DecelerateInterpolator(), new AccelerateDecelerateInterpolator(),// 
-            new BounceInterpolator(), new OvershootInterpolator()};
+            new AccelerateDecelerateInterpolator(), new LinearInterpolator(), //
+            new OvershootInterpolator(), new DecelerateInterpolator(),// 
+            new BounceInterpolator(), new AccelerateInterpolator()};
 
-    private int mWidth, mHeight;
+    private int screenWidth, screenHeight;
 
-    private Random mRandom;
+    private Random random;
 
     /**
      * 进入动画持续时间
      */
-    private int mEnterDuration = 300;
+    private int enterDuration = 300;
     /**
-     * 动画持续时间
+     * 贝塞尔动画持续时间
      */
-    private int mDuration = 3000;
+    private int duration = 3000;
     /**
      * 桃心的缩放比例
      */
@@ -85,8 +85,7 @@ public class HeartLayout extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-
-        mRandom = new Random();
+        random = new Random();
         mStartPointF = new PointF(0, 0);
         //飘心起始
         mParams = new LayoutParams(100, 100);
@@ -94,8 +93,6 @@ public class HeartLayout extends RelativeLayout {
         mParams.addRule(CENTER_HORIZONTAL, TRUE);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeartLayout);
-        mEnterDuration = a.getInt(R.styleable.HeartLayout_enter_duration, mEnterDuration);
-        mDuration = a.getInt(R.styleable.HeartLayout_duration, mDuration);
         mScale = a.getFloat(R.styleable.HeartLayout_scale, mScale);
         if (mScale > 1.f) {
             mScale = 1.0f;
@@ -110,8 +107,8 @@ public class HeartLayout extends RelativeLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         //测量后的宽高
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
+        screenWidth = getMeasuredWidth();
+        screenHeight = getMeasuredHeight();
 
     }
 
@@ -120,13 +117,10 @@ public class HeartLayout extends RelativeLayout {
      */
     public void addHeart() {
 
-        ImageView iv = getHeartView(randomHeartResource());
+        ImageView iv = getHeartView(randomHeart());
         addView(iv);
-        updateStartPointF(iv);
-
-        Animator animator = getAnimator(iv);
-        animator.addListener(new EndAnimatorListener(iv));
-        animator.start();
+        getStartPoint(iv);
+        getAnimator(iv).start();
     }
 
     /**
@@ -145,7 +139,7 @@ public class HeartLayout extends RelativeLayout {
 
 
     /**
-     * 飘心动画
+     * 飘心进入动画
      * 缩放，渐变
      *
      * @param target
@@ -161,7 +155,7 @@ public class HeartLayout extends RelativeLayout {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleX, scaleY, alpha);
         animatorSet.setInterpolator(new LinearInterpolator());
-        animatorSet.setDuration(mEnterDuration);
+        animatorSet.setDuration(enterDuration);
 
         return animatorSet;
     }
@@ -177,27 +171,34 @@ public class HeartLayout extends RelativeLayout {
     private ValueAnimator getBezierCurveAnimator(View target) {
 
         //贝塞尔曲线中间的两个点
-        final PointF pointf1 = randomPointF(3.0f);
-        final PointF pointf2 = randomPointF(1.5f);
+        final PointF pointf1 = getBezierPointF(4.0f);
+        final PointF pointf2 = getBezierPointF(3f);
 
-        //
-        PointF endPoint = new PointF((float) (Math.random() * mWidth), (float) (Math.random() * 50));
+        PointF endPoint = new PointF((float) (Math.random() * screenWidth), (float) (Math.random() * 100));
 
         BezierEvaluator evaluator = new BezierEvaluator(pointf1, pointf2);
         ValueAnimator valueAnimator = ValueAnimator.ofObject(evaluator, mStartPointF, endPoint);
         valueAnimator.setInterpolator(randomInterpolator());
         valueAnimator.addUpdateListener(new BezierListener(target));
 
-        valueAnimator.setDuration(mDuration);
+        valueAnimator.setDuration(duration);
 
         return valueAnimator;
     }
 
 
+    /**
+     * 得到Animator集
+     *
+     * @param target
+     *
+     * @return
+     */
     private Animator getAnimator(View target) {
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(getEnterAnimator(target), getBezierCurveAnimator(target));
+        animatorSet.addListener(new EndAnimatorListener(target));
         return animatorSet;
 
     }
@@ -219,7 +220,7 @@ public class HeartLayout extends RelativeLayout {
      *
      * @return
      */
-    private void updateStartPointF(View target) {
+    private void getStartPoint(View target) {
 
         if (mStartPointF.x == 0 || mStartPointF.y == 0) {
             makeMeasureSpec(target);
@@ -228,8 +229,8 @@ public class HeartLayout extends RelativeLayout {
             Rect x = new Rect();
             target.getDrawingRect(x);
 
-            mStartPointF.x = (mWidth + getPaddingLeft() - getPaddingRight() - width) / 2 + width / 4;
-            mStartPointF.y = mHeight + getPaddingTop() - getPaddingBottom() - height / 2;
+            mStartPointF.x = (screenWidth + getPaddingLeft() - getPaddingRight() - width) / 2 + width / 4;
+            mStartPointF.y = screenHeight + getPaddingTop() - getPaddingBottom() - height / 2;
             Log.i("----db.boy", "" + mStartPointF);
         }
     }
@@ -242,11 +243,10 @@ public class HeartLayout extends RelativeLayout {
      *
      * @return
      */
-    private PointF randomPointF(float scale) {
+    private PointF getBezierPointF(float scale) {
         PointF pointF = new PointF();
-        pointF.x = mRandom.nextInt(mWidth);
-        pointF.y = mRandom.nextInt(mHeight) / scale;
-
+        pointF.x = random.nextInt(screenWidth);
+        pointF.y = random.nextInt(screenHeight) / scale;
         return pointF;
     }
 
@@ -256,7 +256,7 @@ public class HeartLayout extends RelativeLayout {
      * @return
      */
     private Interpolator randomInterpolator() {
-        return interpolators[mRandom.nextInt(interpolators.length)];
+        return interpolators[random.nextInt(interpolators.length)];
     }
 
     /**
@@ -264,30 +264,17 @@ public class HeartLayout extends RelativeLayout {
      *
      * @return
      */
-    private int randomHeartResource() {
-        return heartRes[mRandom.nextInt(heartRes.length)];
+    private int randomHeart() {
+        return hearts[random.nextInt(hearts.length)];
     }
 
     /**
      * 乘积
      *
-     * @param a
-     * @param b
-     *
      * @return
      */
     private float pow(float a, int b) {
-        if (b == 0) {
-            return 1f;
-        } else if (b < 0) {
-            throw new IllegalArgumentException("b must be bigger than 1");
-        }
-
-        float s = 1f;
-        for (int i = 0; i < b; i++) {
-            s *= a;
-        }
-        return s;
+        return (float) Math.pow(a, b);
     }
 
     /**
@@ -304,7 +291,6 @@ public class HeartLayout extends RelativeLayout {
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
-            //动画结束 移除target
             removeView(target);
         }
     }
@@ -319,11 +305,11 @@ public class HeartLayout extends RelativeLayout {
 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
-            //这里获取到贝塞尔曲线计算出来的的x y值 赋值给view 这样就能让爱心随着曲线走啦
+            //这里获取到贝塞尔曲线计算出来的的x y值
             PointF pointF = (PointF) animation.getAnimatedValue();
             target.setX(pointF.x);
             target.setY(pointF.y);
-            // 这里顺便做一个alpha动画
+            //渐隐alpha动画
             target.setAlpha(1 - animation.getAnimatedFraction());
         }
     }
@@ -348,9 +334,15 @@ public class HeartLayout extends RelativeLayout {
             float time1 = 1.0f - fraction;
             PointF point = new PointF();//结果
 
-            point.x = pow(time1, 3) * (startValue.x) + 3 * pow(time1, 2) * fraction * (pointF1.x) + 3 * time1 * pow(fraction, 2) * (pointF2.x) + pow(fraction, 3) * (endValue.x);
+            point.x = pow(time1, 3) * (startValue.x)            //  
+                    + 3 * pow(time1, 2) * fraction * (pointF1.x) //
+                    + 3 * time1 * pow(fraction, 2) * (pointF2.x) //
+                    + pow(fraction, 3) * (endValue.x);
 
-            point.y = pow(time1, 3) * (startValue.y) + 3 * pow(time1, 2) * fraction * (pointF1.y) + 3 * time1 * pow(fraction, 2) * (pointF2.y) + pow(fraction, 3) * (endValue.y);
+            point.y = pow(time1, 3) * (startValue.y)                //
+                    + 3 * pow(time1, 2) * fraction * (pointF1.y) //
+                    + 3 * time1 * pow(fraction, 2) * (pointF2.y) //
+                    + pow(fraction, 3) * (endValue.y);
             return point;
         }
     }

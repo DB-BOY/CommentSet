@@ -9,7 +9,7 @@ import android.view.View;
 
 import cn.dbboy.commentlib.R;
 import cn.dbboy.commentlib.base.BaseActivity;
-import cn.dbboy.commentlib.wedget.HeartLayout;
+import cn.dbboy.commentlib.widget.HeartLayout;
 
 /**
  * Created by DB_BOY on 2019/5/15.</br>
