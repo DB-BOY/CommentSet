@@ -12,7 +12,14 @@ import cn.dbboy.commentlib.main.MainAdapter;
 import cn.dbboy.commentlib.scalegradual.ScaleAndGradual;
 
 public class MainActivity extends BaseActivity {
-    ItemType[] s = {ItemType.ScaleGradual, ItemType.Wechat, ItemType.HeadPile, ItemType.Toutiao, ItemType.HeartFlow};
+    ItemType[] s = {ItemType.ScaleGradual//
+            //            , ItemType.Wechat//
+            //            , ItemType.HeadPile//
+            //            , ItemType.Toutiao//
+            //            , ItemType.HeartFlow
+
+            //
+    };
 
     @Override
     protected int getLayoutId() {
