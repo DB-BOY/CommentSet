@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import cn.dbboy.commentlib.base.BaseActivity;
 import cn.dbboy.commentlib.base.ItemType;
+import cn.dbboy.commentlib.heart.HeartFlowActivity;
 import cn.dbboy.commentlib.main.MainAdapter;
 import cn.dbboy.commentlib.scalegradual.ScaleAndGradual;
 
@@ -16,7 +17,7 @@ public class MainActivity extends BaseActivity {
             //            , ItemType.Wechat//
             //            , ItemType.HeadPile//
             //            , ItemType.Toutiao//
-            //            , ItemType.HeartFlow
+            , ItemType.HeartFlow
             //
     };
 
@@ -47,6 +48,10 @@ public class MainActivity extends BaseActivity {
         switch (item) {
             case ScaleGradual:
                 intent = ScaleAndGradual.createIntent(MainActivity.this);
+                break;
+
+            case HeartFlow:
+                intent = HeartFlowActivity.createIntent(MainActivity.this);
                 break;
         }
         startActivity(intent);

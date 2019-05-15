@@ -16,9 +16,8 @@ import cn.dbboy.commentlib.utils.AnimatorUtil;
  */
 public class ScaleAndGradual extends BaseActivity {
 
-    final int CODE_CLICK = 1;
     View btnHeart, btnHeart1, tvRotation, tvRotation1, tvRotation2, llColor;
-    int count = 0;
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
