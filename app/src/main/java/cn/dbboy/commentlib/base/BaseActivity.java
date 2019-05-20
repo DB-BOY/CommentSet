@@ -16,7 +16,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         initData();
         initView();
-        setLisenter();
+        setListener();
     }
 
     public void initData() {
@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initView();
 
-    public void setLisenter() {
+    public void setListener() {
 
     }
 

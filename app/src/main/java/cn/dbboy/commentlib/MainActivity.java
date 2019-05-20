@@ -10,13 +10,14 @@ import cn.dbboy.commentlib.base.BaseActivity;
 import cn.dbboy.commentlib.base.ItemType;
 import cn.dbboy.commentlib.heart.HeartFlowActivity;
 import cn.dbboy.commentlib.main.MainAdapter;
-import cn.dbboy.commentlib.scalegradual.ScaleAndGradual;
+import cn.dbboy.commentlib.scalegradual.ScaleAndGradualActivity;
+import cn.dbboy.commentlib.toutiao.ToutiaoActivity;
 
 public class MainActivity extends BaseActivity {
     ItemType[] s = {ItemType.ScaleGradual//
-            //            , ItemType.Wechat//
-            //            , ItemType.HeadPile//
-            //            , ItemType.Toutiao//
+            //                        , ItemType.Wechat//
+            //                        , ItemType.HeadPile//
+            , ItemType.Toutiao//
             , ItemType.HeartFlow
             //
     };
@@ -47,12 +48,16 @@ public class MainActivity extends BaseActivity {
         Intent intent = null;
         switch (item) {
             case ScaleGradual:
-                intent = ScaleAndGradual.createIntent(MainActivity.this);
+                intent = ScaleAndGradualActivity.createIntent(MainActivity.this);
                 break;
 
             case HeartFlow:
                 intent = HeartFlowActivity.createIntent(MainActivity.this);
                 break;
+            case Toutiao:
+                intent = ToutiaoActivity.createIntent(MainActivity.this);
+                break;
+                
         }
         startActivity(intent);
     }

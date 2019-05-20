@@ -10,4 +10,10 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+
+    <style name="lable">
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

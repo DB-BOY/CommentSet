@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/lable"
         android:text="缩放抖动： "
     />
     <ImageView
@@ -20,8 +19,7 @@
         android:layout_height="50dp"
         android:src="@drawable/icon_heart_red"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/lable"
         android:text="缩放抖动(属性动画)： "
     />
     <ImageView
@@ -30,8 +28,7 @@
         android:layout_height="50dp"
         android:src="@drawable/icon_heart_red"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/lable"
         android:text="翻转动画： "
     />
 
@@ -54,8 +51,7 @@
         android:text="Y轴旋转"
         android:textSize="20dp"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/lable"
         android:text="颜色渐变： "
     />
     <LinearLayout

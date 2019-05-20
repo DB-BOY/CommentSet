@@ -12,9 +12,10 @@ import cn.dbboy.commentlib.base.BaseActivity;
 import cn.dbboy.commentlib.utils.AnimatorUtil;
 
 /**
+ * 缩放、渐变动画代码
  * Created by DB_BOY on 2019/5/15.</br>
  */
-public class ScaleAndGradual extends BaseActivity {
+public class ScaleAndGradualActivity extends BaseActivity {
 
     View btnHeart, btnHeart1, tvRotation, tvRotation1, tvRotation2, llColor;
 
@@ -34,7 +35,7 @@ public class ScaleAndGradual extends BaseActivity {
     };
 
     public static Intent createIntent(Context ctx) {
-        Intent intent = new Intent(ctx, ScaleAndGradual.class);
+        Intent intent = new Intent(ctx, ScaleAndGradualActivity.class);
         return intent;
     }
 
@@ -54,7 +55,7 @@ public class ScaleAndGradual extends BaseActivity {
     }
 
     @Override
-    public void setLisenter() {
+    public void setListener() {
         btnHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -49,7 +49,7 @@ public class HeartFlowActivity extends BaseActivity {
     }
 
     @Override
-    public void setLisenter() {
+    public void setListener() {
         btnHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
