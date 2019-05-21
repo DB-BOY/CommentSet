@@ -22,6 +22,7 @@
         <activity android:name=".heart.HeartFlowActivity"/>
         <activity android:name=".headpile.HeadPileActivity"/>
         <activity android:name=".toutiao.ToutiaoActivity"/>
+        <activity android:name=".weibo.WeiboActivity"/>
     </application>
 
 </manifest>

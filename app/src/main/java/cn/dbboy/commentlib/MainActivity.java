@@ -12,13 +12,14 @@ import cn.dbboy.commentlib.heart.HeartFlowActivity;
 import cn.dbboy.commentlib.main.MainAdapter;
 import cn.dbboy.commentlib.scalegradual.ScaleAndGradualActivity;
 import cn.dbboy.commentlib.toutiao.ToutiaoActivity;
+import cn.dbboy.commentlib.weibo.WeiboActivity;
 
 public class MainActivity extends BaseActivity {
     ItemType[] s = {ItemType.ScaleGradual//
             //                        , ItemType.Wechat//
             //                        , ItemType.HeadPile//
             , ItemType.Toutiao//
-            , ItemType.HeartFlow
+            , ItemType.HeartFlow, ItemType.Weibo
             //
     };
 
@@ -56,6 +57,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case Toutiao:
                 intent = ToutiaoActivity.createIntent(MainActivity.this);
+                break;
+            case Weibo:
+                intent = WeiboActivity.createIntent(MainActivity.this);
                 break;
                 
         }

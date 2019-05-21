@@ -19,20 +19,6 @@ public class ScaleAndGradualActivity extends BaseActivity {
 
     View btnHeart, btnHeart1, tvRotation, tvRotation1, tvRotation2, llColor;
 
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case CODE_CLICK:
-                    if (count < 3) {
-                        click();
-                    }
-                    break;
-            }
-        }
-    };
 
     public static Intent createIntent(Context ctx) {
         Intent intent = new Intent(ctx, ScaleAndGradualActivity.class);
@@ -97,6 +83,20 @@ public class ScaleAndGradualActivity extends BaseActivity {
         handler.sendEmptyMessageDelayed(CODE_CLICK, 600);
     }
 
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case CODE_CLICK:
+                    if (count < 3) {
+                        click();
+                    }
+                    break;
+            }
+        }
+    };
     private void click() {
         count++;
         handler.sendEmptyMessageDelayed(CODE_CLICK, 3000);

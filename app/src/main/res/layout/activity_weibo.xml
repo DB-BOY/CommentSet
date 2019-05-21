@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/lable"
+        android:text="微博点赞效果"/>
+    <com.tenny.PraiseButton
+        android:id="@+id/thumb_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:circle_color="#FFC107"
+        app:firework_color="#FF5722"
+        app:icon_size="50dp"
+        app:like_drawable="@drawable/ic_praise"
+        app:unlike_drawable="@drawable/ic_praise_dis"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"/>
+</LinearLayout>

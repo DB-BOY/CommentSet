@@ -1,10 +1,17 @@
 ## 点赞大集合
 
-> 比较流行的点赞效果，就想做一个点赞合集，方便大家借鉴。
->全部用动画实现
+> 本着不重复造轮子的精神
+
+> 收集流行的点赞效果，做一个点赞合集，方便大家借鉴。
+
+
 
 #### 1. 缩放变色
 
+> 抛开gif实现的效果，大部分都是由属性动画完成，一定要把属性动画搞懂。
+
+> 各种动画组合后，就是你想要的那种效果。
+ 
 ![缩放](./image/scale.gif)
 
 
@@ -17,4 +24,12 @@
 
 > https://github.com/Qiu800820/SuperLike
 
-#### 4.
+![缩放](./image/toutiao.gif)
+
+#### 4. 微博点赞
+
+> https://github.com/tennywu/PraiseButton
+
+> https://www.jianshu.com/p/2225c11b821d
+
+![缩放](./image/weibo.gif)
